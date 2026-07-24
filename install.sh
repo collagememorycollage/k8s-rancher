@@ -2,7 +2,19 @@
 
 set -e 
 
-if [ $(id -u) == "0" ]; then	
+if [ -f .env ]; then
+	export $(cat .env | xargs)
+else
+	echo ".env file not found, you need to create .env file"
+	exit 1
+fi
+
+export VAGRANT_HTTP_PROXY=${https_proxy}
+export VAGRANT_NO_PROXY="127.0.0.1"
+
+country_code=$(curl -s https://ipwho.is | grep "country_code" | cut -d'"' -f4)
+
+if [ $(id -u) == "0" ] && [ $country_code != "RU" ]; then	
 	#Update system
 	apt update -y && apt upgrade -y
 	
@@ -17,5 +29,6 @@ if [ $(id -u) == "0" ]; then
 	mv ./vagrant /usr/bin
 	rm  LICENSE.txt 
 else
-	echo "You need login root"
+	echo "You need login root or set up proxy server"
+	exit 1
 fi
