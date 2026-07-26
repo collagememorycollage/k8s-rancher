@@ -9,5 +9,10 @@ systemctl enable rke2-server.service
 
 systemctl start rke2-server.service
 
-
 cp /var/lib/rancher/rke2/bin /usr/bin
+
+mkdir -p ~/.kube
+
+ln -s /etc/rancher/rke2/rke2.yaml ~/.kube/config
+
+systemctl restart rke2-server.service
