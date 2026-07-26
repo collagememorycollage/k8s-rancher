@@ -1,5 +1,10 @@
 k8s-rancher
 
+Структура сети:
+1) ControlPlane1 - 192.168.41.101
+2) WorkerNode1 - 192.168.41.100
+3) DNS - 192.168.41.102
+
 Для настройки базового окружения можно воспользоваться скриптом ./install.sh, который установит VirtualBox и vgrant
 
 Также перед началом работы, следует настроить 3x-ui, чтобы использовать прокси. При условии, что вы находитесь в регионе RU.
@@ -50,9 +55,8 @@ root@neptun-System-Product-Name:/home/neptun/devops_menti/k8s-rancher#vagrant st
 Current machine states:
 
 workerNode                running (virtualbox)
-masterNode                running (virtualbox)
+controlPlane              running (virtualbox)
 DNS                       running (virtualbox)
-Ansible                   running (virtualbox)
 
 This environment represents multiple VMs. The VMs are all listed
 above with their current state. For more information about a specific

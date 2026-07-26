@@ -46,8 +46,8 @@ echo "
 @	IN	NS	www.ex.	
 @	IN	A	192.168.41.102
 www	IN	A	192.168.41.102
-wc1	IN	A	192.168.41.100
-mn1 	IN	A	192.168.41.101
+wr1	IN	A	192.168.41.100
+cr1 	IN	A	192.168.41.101
 
 " > /etc/bind/fz_ex
 
@@ -68,8 +68,8 @@ echo "
 ;
 		NS	www.ex.	
 1	PTR	www.ex.
-1	PTR	mn1.ex.
-2	PTR	wc1.ex.
+1	PTR	wr1.ex.
+2	PTR	cr1.ex.
 
 " > /etc/bind/rz_ex
 

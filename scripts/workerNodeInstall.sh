@@ -13,3 +13,5 @@ token: <token from server node>
 """ > /etc/rancher/rke2/config.yaml 
 
 systemctl start rke2-agent.service
+
+echo "nameserver 192.168.41.102" >> /etc/resolv.conf

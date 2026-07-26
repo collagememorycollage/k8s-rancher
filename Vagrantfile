@@ -1,20 +1,20 @@
 hosts = { 
   "workerNode" => { 
     :box => "ubuntu/jammy64",
-    :hostname => "wc1",
+    :hostname => "wr1",
     :ip => "192.168.41.100",
     :ram => "4096",
     :cpu => "2",
     :script => "scripts/workerNodeInstall.sh"
   },
 
-  "masterNode" => { 
+  "controlPlane" => { 
     :box => "ubuntu/jammy64",
-    :hostname => "mn1",
+    :hostname => "cr1",
     :ip => "192.168.41.101",
-    :ram => "5000",
+    :ram => "4096",
     :cpu => "2",
-    :script => "scripts/masterNodeIstall.sh"
+    :script => "scripts/masterNodeInstall.sh"
   },
   
   "DNS" => {
