@@ -3,7 +3,7 @@ hosts = {
     :box => "bento/ubuntu-20.04",
     :hostname => "wc1",
     :ip => "192.168.41.100",
-    :ram => 4096,
+    :ram => "4096",
     :cpu => "2"
   },
 
@@ -12,7 +12,7 @@ hosts = {
     :hostname => "mn1",
     :ip => "192.168.41.101",
     :ram => "4096",
-    :cpu => "2"
+    :cpu => "2",
   },
   
   "DNS" => {
@@ -20,16 +20,10 @@ hosts = {
     :hostname => "dns",
     :ip => "192.168.41.102",
     :ram => "2048",
-    :cpu => "1"
-  },
+    :cpu => "1",
+    :script => "scripts/bind9.sh"
+  }
 
-  "Ansible" => {
-    :box => "bento/ubuntu-20.04",
-    :hostname => "ansible",
-    :ip => "192.168.41.103",
-    :ram => "2048",
-    :cpu => "1"
-   }
 }
 
 Vagrant.configure("2") do |config|
@@ -44,6 +38,11 @@ Vagrant.configure("2") do |config|
         vb.memory = settings[:ram]
         vb.cpus = settings[:cpu]
       end
+
+      if settings[:script]
+        node.vm.provision "shell", path: settings[:script]
+      end
+
     end
   end
 end
