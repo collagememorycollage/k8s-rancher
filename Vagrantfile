@@ -1,22 +1,24 @@
 hosts = { 
   "workerNode" => { 
-    :box => "bento/ubuntu-20.04",
+    :box => "ubuntu/jammy64",
     :hostname => "wc1",
     :ip => "192.168.41.100",
     :ram => "4096",
-    :cpu => "2"
+    :cpu => "2",
+    :script => "scripts/workerNodeInstall.sh"
   },
 
   "masterNode" => { 
-    :box => "bento/ubuntu-20.04",
+    :box => "ubuntu/jammy64",
     :hostname => "mn1",
     :ip => "192.168.41.101",
-    :ram => "4096",
+    :ram => "5000",
     :cpu => "2",
+    :script => "scripts/masterNodeIstall.sh"
   },
   
   "DNS" => {
-    :box => "bento/ubuntu-20.04", 
+    :box => "ubuntu/jammy64", 
     :hostname => "dns",
     :ip => "192.168.41.102",
     :ram => "2048",

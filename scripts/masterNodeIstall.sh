@@ -1,7 +1,7 @@
 #!/bin/bash
-apt update && apt upgarde -y
+#apt update && apt upgarde -y
 
-echo "nameserver 192.168.41.102" > /etc/resolv.conf
+#echo "nameserver 192.168.41.102" > /etc/resolv.conf
 
 curl -sfL https://get.rke2.io | sh -
 
@@ -9,10 +9,15 @@ systemctl enable rke2-server.service
 
 systemctl start rke2-server.service
 
-cp /var/lib/rancher/rke2/bin /usr/bin
+sleep 10 
 
-mkdir -p ~/.kube
+cp /var/lib/rancher/rke2/bin/kubectl /usr/bin
 
-ln -s /etc/rancher/rke2/rke2.yaml ~/.kube/config
+mkdir -p /home/vagrant/.kube
+
+ln -s /etc/rancher/rke2/rke2.yaml /home/vagrant/.kube/config
+
+chown vagrant:vagrant -R /etc/rancher/rke2
+chown vagrant:vagrant /home/vagrant/.kube/config
 
 systemctl restart rke2-server.service

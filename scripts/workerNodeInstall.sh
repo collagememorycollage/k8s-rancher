@@ -7,7 +7,9 @@ systemctl enable rke2-agent.service
 mkdir -p /etc/rancher/rke2/
 touch /etc/rancher/rke2/config.yaml
 
-server: https://<server>:9345
+echo """
+server: https://192.168.41.101:9345
 token: <token from server node>
+""" > /etc/rancher/rke2/config.yaml 
 
 systemctl start rke2-agent.service
