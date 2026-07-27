@@ -1,0 +1,58 @@
+hosts = { 
+  "workerNode" => { 
+    :box => "rofrano/ubuntu-systemd:22.04",
+    :hostname => "wr1",
+    :ip => "192.168.41.100",
+    :ram => "4096",
+    :cpu => "2",
+    :script => "scripts/workerNodeInstall.sh"
+  },
+
+  "controlPlane" => { 
+    :box => "rofrano/ubuntu-systemd:22.04",
+    :hostname => "cr1",
+    :ip => "192.168.41.101",
+    :ram => "4096",
+    :cpu => "2",
+    :script => "scripts/masterNodeInstall.sh"
+  },
+  
+  "DNS" => {
+    :box => "rofrano/ubuntu-systemd:22.04", 
+    :hostname => "dns",
+    :ip => "192.168.41.102",
+    :ram => "2048",
+    :cpu => "1",
+    :script => "scripts/bind9.sh"
+  }
+
+}
+
+
+Vagrant.configure("2") do |config|
+  hosts.each do |name, settings|
+    config.vm.define name do |node|
+      node.vm.box = nil
+
+      node.vm.provider "docker" do |d|
+        d.image = settings[:image]
+        d.remains_running = true
+        d.has_ssh = true
+
+        d.privileged = true
+
+        d.create_args = [
+          "--cpus=#{settings[:cpu]}",
+          "--memory=#{settings[:ram]}m",
+          "--hostname=#{settings[:hostname]}"
+        ]
+      end
+
+      node.vm.network "private_network", ip: settings[:ip]
+
+      if settings[:script]
+        node.vm.provision "shell", path: settings[:script]
+      end
+    end
+  end
+end
