@@ -25,10 +25,10 @@ hosts = {
     :cpu => "1",
     :script => "../scripts/bind9.sh"
   }
-
 }
 
 Vagrant.configure("2") do |config|
+  ENV['VAGRANT_DEFAULT_PROVIDER'] = 'libvirt'
   
   hosts.each do |name, settings|
     config.vm.define name do |node|
@@ -37,6 +37,7 @@ Vagrant.configure("2") do |config|
       node.vm.network "private_network", ip: settings[:ip]
 
       node.vm.provider "libvirt" do |qe|
+        qe.driver = "qemu" # Включаем программную эмуляцию из-за отсутствия KVM
         qe.memory = settings[:ram]
         qe.cpus = settings[:cpu]
       end
@@ -44,9 +45,6 @@ Vagrant.configure("2") do |config|
       if settings[:script]
         node.vm.provision "shell", path: settings[:script]
       end
-
     end
   end
 end
-
-
