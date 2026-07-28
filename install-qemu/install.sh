@@ -17,10 +17,11 @@ country_code=$(curl -s https://ipwho.is | grep "country_code" | cut -d'"' -f4)
 if [ $(id -u) == "0" ] && [ $country_code != "RU" ]; then	
 	#Update system
 	apt update -y && apt upgrade -y
-		
-	#Download and install qemu 
-	git clone https://github.com/ppggff/vagrant-qemu.git
-    apt install -y ruby-dev build-essential libvirt-dev
+	
+	apt update && sudo apt install -y ruby-dev build-essential libvirt-dev
+    apt install ruby-rubygems -y
+	gem install vagrant-libvirt
+	
 	agrant plugin install ./vagrant-libvirt-0.12.2.gem --plugin-clean-sources --plugin-source https://rubygems.org
 	#Download and install vagrant
 	apt install unzip -y 
