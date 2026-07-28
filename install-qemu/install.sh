@@ -18,11 +18,8 @@ if [ $(id -u) == "0" ] && [ $country_code != "RU" ]; then
 	#Update system
 	apt update -y && apt upgrade -y
 		
-	#Download and install virtualbox
-	wget https://download.virtualbox.org/virtualbox/7.2.14/virtualbox-7.2_7.2.14-174565~Ubuntu~plucky_amd64.deb
-	apt install -y ./virtualbox* 
-	sudo mkdir -p /etc/vbox && echo "* 0.0.0.0/0" | sudo tee -a /etc/vbox/networks.conf
-	rm virtualbox*
+	#Download and install qemu 
+	apt install -y qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils iptables
 
 	#Download and install vagrant
 	apt install unzip -y 
