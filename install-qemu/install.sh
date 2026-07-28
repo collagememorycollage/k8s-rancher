@@ -19,8 +19,9 @@ if [ $(id -u) == "0" ] && [ $country_code != "RU" ]; then
 	apt update -y && apt upgrade -y
 		
 	#Download and install qemu 
-	apt install -y qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils iptables
-
+	git clone https://github.com/ppggff/vagrant-qemu.git
+    apt install -y ruby-dev build-essential libvirt-dev
+	agrant plugin install ./vagrant-libvirt-0.12.2.gem --plugin-clean-sources --plugin-source https://rubygems.org
 	#Download and install vagrant
 	apt install unzip -y 
 	wget https://releases.hashicorp.com/vagrant/2.4.9/vagrant_2.4.9_linux_amd64.zip
