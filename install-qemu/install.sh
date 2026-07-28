@@ -23,7 +23,6 @@ if [ $(id -u) == "0" ] && [ $country_code != "RU" ]; then
 	systemctl enable --now libvirtd
     apt install ruby-rubygems -y
 	gem install vagrant-libvirt
-	vagrant plugin install /var/lib/gems/3.2.0/cache/vagrant-libvirt-0.12.2.gem --plugin-clean-sources --plugin-source https://rubygems.org
 	
 	#Download and install vagrant
 	apt install unzip -y 
@@ -31,6 +30,7 @@ if [ $(id -u) == "0" ] && [ $country_code != "RU" ]; then
 	unzip vagrant*
 	mv ./vagrant /usr/bin
 	rm  LICENSE.txt 
+	vagrant plugin install /var/lib/gems/3.2.0/cache/vagrant-libvirt-0.12.2.gem --plugin-clean-sources --plugin-source https://rubygems.org
 else
 	echo "You need login root or set up proxy server"
 	exit 1
