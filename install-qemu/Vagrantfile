@@ -1,6 +1,6 @@
 hosts = { 
   "workerNode" => { 
-    :box => "ubuntu/jammy64",
+    :box => "generic/ubuntu2204",
     :hostname => "wr1",
     :ip => "192.168.41.100",
     :ram => "4096",
@@ -9,7 +9,7 @@ hosts = {
   },
 
   "controlPlane" => { 
-    :box => "ubuntu/jammy64",
+    :box => "generic/ubuntu2204",
     :hostname => "cr1",
     :ip => "192.168.41.101",
     :ram => "4096",
@@ -18,7 +18,7 @@ hosts = {
   },
   
   "DNS" => {
-    :box => "ubuntu/jammy64", 
+    :box => "generic/ubuntu2204", 
     :hostname => "dns",
     :ip => "192.168.41.102",
     :ram => "2048",
