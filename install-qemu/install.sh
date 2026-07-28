@@ -18,7 +18,8 @@ if [ $(id -u) == "0" ] && [ $country_code != "RU" ]; then
 	#Update system
 	apt update -y && apt upgrade -y
 	
-	apt update && sudo apt install -y ruby-dev build-essential libvirt-dev
+	apt install -y qemu-kvm libvirt-daemon-system libvirt-dev ruby-dev build-essential
+
     apt install ruby-rubygems -y
 	gem install vagrant-libvirt
 
