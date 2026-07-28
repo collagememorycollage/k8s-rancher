@@ -17,12 +17,14 @@ country_code=$(curl -s https://ipwho.is | grep "country_code" | cut -d'"' -f4)
 if [ $(id -u) == "0" ] && [ $country_code != "RU" ]; then	
 	#Update system
 	apt update -y && apt upgrade -y
-	
+
+	#Install vagrant and plugin libvirt
 	apt install -y qemu-kvm libvirt-daemon-system libvirt-dev ruby-dev build-essential
 	systemctl enable --now libvirtd
     apt install ruby-rubygems -y
 	gem install vagrant-libvirt
-
+	vagrant plugin install /var/lib/gems/3.2.0/cache/vagrant-libvirt-0.12.2.gem --plugin-clean-sources --plugin-source https://rubygems.org
+	
 	#Download and install vagrant
 	apt install unzip -y 
 	wget https://releases.hashicorp.com/vagrant/2.4.9/vagrant_2.4.9_linux_amd64.zip
