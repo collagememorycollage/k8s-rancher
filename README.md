@@ -62,5 +62,5 @@ This environment represents multiple VMs. The VMs are all listed
 above with their current state. For more information about a specific
 VM, run `vagrant status NAME`.
 ```
-
+После того как ноды развернутся, то следует скопировать токен с Control Plane на Worker Node
 
