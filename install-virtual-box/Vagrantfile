@@ -1,3 +1,5 @@
+ENV['VAGRANT_SERVER_URL'] = 'https://vagrant.elab.pro'
+
 hosts = { 
   "workerNode" => { 
     :box => "ubuntu/jammy64",
