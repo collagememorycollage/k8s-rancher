@@ -1,3 +1,4 @@
+# https://vagrant.elab.pro/downloads/
 ENV['VAGRANT_SERVER_URL'] = 'https://vagrant.elab.pro'
 
 hosts = { 
