@@ -12,7 +12,7 @@ options {
 	allow-query {mynet;};
 	listen-on-v6 { none; };
 };
-" > named.conf.options
+" > /etc/bind/named.conf.options
 
 echo "
 zone \"ex\" {
@@ -31,23 +31,28 @@ touch /etc/bind/fz_ex
 
 echo "
 ;
-; BIND data file for local loopback interface
+; BIND data file for ex. zone
 ;
-;don't forget empty string end!!!
 \$TTL	604800
 \$ORIGIN ex.
-@	IN	SOA	www admin (
-			      2		; Serial
+@	IN	SOA	ns1.ex. admin.ex. (
+			      3		; Serial (увеличили на 1)
 			 604800		; Refresh
 			  86400		; Retry
 			2419200		; Expire
 			 604800 )	; Negative Cache TTL
 ;
-@	IN	NS	www.ex.	
+; Определение DNS-серверов (с точкой на конце!)
+@	IN	NS	ns1.ex.	
+
+; IP-адреса для самой зоны и DNS-сервера
 @	IN	A	192.168.41.102
+ns1	IN	A	192.168.41.102
 www	IN	A	192.168.41.102
+
+; Остальные хосты вашей сети
 wr1	IN	A	192.168.41.100
-cr1 	IN	A	192.168.41.101
+cr1	IN	A	192.168.41.101
 
 " > /etc/bind/fz_ex
 
@@ -73,6 +78,9 @@ echo "
 
 " > /etc/bind/rz_ex
 
-echo "nameserver 192.168.41.102" >> /etc/resolv.conf
+ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
 
-systemctl reload bind9
+echo "nameserver 192.168.41.102
+search ex" > /etc/resolv.conf
+
+systemctl start bind9
