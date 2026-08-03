@@ -1,33 +1,50 @@
-# https://vagrant.elab.pro/downloads/
 ENV['VAGRANT_SERVER_URL'] = 'https://vagrant.elab.pro'
 
 hosts = { 
+  "DNS" => {
+    :box => "ubuntu/jammy64",
+    :hostname => "dns",
+    :ip => "192.168.41.102",
+    :ram => "2048",
+    :cpu => "2",
+    :script => "../scripts/bind9.sh"
+  },
+
+  "controlPlane" => {
+    :box => "ubuntu/jammy64",
+    :hostname => "cr1",
+    :ip => "192.168.41.101",
+    :ram => "4096",
+    :cpu => "4",
+    :script => "../scripts/controlPlaneInstall.sh"
+  },
+
   "workerNode" => { 
     :box => "ubuntu/jammy64",
     :hostname => "wr1",
     :ip => "192.168.41.100",
     :ram => "4096",
-    :cpu => "2",
+    :cpu => "4",
     :script => "../scripts/workerNodeInstall.sh"
-  },
-
-  "controlPlane" => { 
-    :box => "ubuntu/jammy64",
-    :hostname => "cr1",
-    :ip => "192.168.41.101",
-    :ram => "4096",
-    :cpu => "2",
-    :script => "../scripts/masterNodeInstall.sh"
-  },
-  
-  "DNS" => {
-    :box => "ubuntu/jammy64", 
-    :hostname => "dns",
-    :ip => "192.168.41.102",
-    :ram => "2048",
-    :cpu => "1",
-    :script => "../scripts/bind9.sh"
   }
+
+#  "controlPlane" => { 
+#    :box => "ubuntu/jammy64",
+#    :hostname => "cr1",
+#    :ip => "192.168.41.101",
+#    :ram => "4096",
+#    :cpu => "4",
+#    :script => "../scripts/masterNodeInstall.sh"
+#  },
+  
+#  "DNS" => {
+#    :box => "ubuntu/jammy64", 
+#    :hostname => "dns",
+#    :ip => "192.168.41.102",
+#    :ram => "2048",
+#    :cpu => "1",
+#    :script => "../scripts/bind9.sh"
+#  }
 
 }
 
@@ -51,7 +68,5 @@ Vagrant.configure("2") do |config|
     end
   end
 end
-
-
 
 
