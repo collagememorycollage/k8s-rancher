@@ -11,9 +11,6 @@ else
 	exit 1
 fi
 
-export VAGRANT_HTTP_PROXY=${https_proxy}
-export VAGRANT_NO_PROXY="127.0.0.1"
-
 country_code=$(curl -s https://ipwho.is | grep "country_code" | cut -d'"' -f4)
 
 if [ $(id -u) == "0" ] && [ $country_code != "RU" ]; then	
