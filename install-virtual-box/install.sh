@@ -1,47 +1,42 @@
 #!/bin/bash
-#apt update && apt upgarde -y
 
-curl -sfL https://get.rke2.io | sh -
+ubuntu_version=$(lsb_release -cs)
 
-systemctl enable rke2-server.service
+set -e 
 
-mkdir -p /etc/rancher/rke2/
+if [ -f .env ]; then
+	set -a 
+	source .env
+	set +a
+	echo "All vars are exported..."
+	#export $(cat .env | xargs)
+else
+	echo ".env file not found, you need to create .env file"
+	return 1 2>/dev/null || exit 1
+fi
 
-touch /etc/rancher/rke2/config.yaml
+country_code=$(curl -s https://ipwho.is | grep "country_code" | cut -d'"' -f4)
 
-echo "bind-address: 192.168.41.101
-advertise-address: 192.168.41.101
-node-ip: 192.168.41.101
-tls-san:
-  - 192.168.41.101" > /etc/rancher/rke2/config.yaml
+if [ $(id -u) == "0" ] && [ $country_code != "RU" ]; then	
+	#Update system
+	apt update -y && apt upgrade -y
+		
+	#Download and install virtualbox
+	echo "Install Virtual Box"
+	wget https://download.virtualbox.org/virtualbox/7.2.14/virtualbox-7.2_7.2.14-174565~Ubuntu~${ubuntu_version}_amd64.deb
+	apt install -y ./virtualbox* 
+	sudo mkdir -p /etc/vbox && echo "* 0.0.0.0/0" | sudo tee -a /etc/vbox/networks.conf
+	rm virtualbox*
 
-systemctl start rke2-server.service
-
-sleep 10 
-
-cp /var/lib/rancher/rke2/bin/kubectl /usr/bin
-
-mkdir -p /home/vagrant/.kube
-
-ln -s /etc/rancher/rke2/rke2.yaml /home/vagrant/.kube/config
-
-chown vagrant:vagrant -R /etc/rancher/rke2
-chown vagrant:vagrant /home/vagrant/.kube/config
-
-systemctl restart rke2-server.service
-
-echo "nameserver 192.168.41.102" >> /etc/resolv.conf
-
-while [ ! -f /var/lib/rancher/rke2/server/node-token ]; do
-  sleep 2
-done
-
-# Ждем, пока файл токена физически появится
-while [ ! -f /var/lib/rancher/rke2/server/node-token ]; do
-  sleep 2
-done
-
-cp /var/lib/rancher/rke2/server/node-token /vagrant/rke2_token
-chmod 644 /vagrant/rke2_token
-
-
+	#Download and install vagrant
+	echo "Install Vagrant"
+	apt install unzip -y 
+	wget https://releases.hashicorp.com/vagrant/2.4.9/vagrant_2.4.9_linux_amd64.zip
+	unzip vagrant*
+	mv ./vagrant /usr/bin
+	rm  LICENSE.txt 
+	rm vagrant*
+else
+	echo "You need login root or set up proxy server"
+	exit 1
+fi
