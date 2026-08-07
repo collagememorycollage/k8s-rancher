@@ -1,5 +1,5 @@
 #!/bin/bash
-#apt update && apt upgarde -y
+apt update && apt upgrade -y
 
 curl -sfL https://get.rke2.io | sh -
 
