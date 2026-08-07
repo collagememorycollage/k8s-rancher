@@ -5,13 +5,19 @@ k8s-rancher
 2) WorkerNode1 - 192.168.41.100
 3) DNS - 192.168.41.102
 
+Скачивание образов   мфпкфте происходит из https://vagrant.elab.pro/downloads/
+
+ Также опционально можно настроить DNS и кол-во worker нод.
+
 Для настройки базового окружения можно воспользоваться скриптом ./install.sh, который установит VirtualBox и vgrant
 
 Также перед началом работы, следует настроить 3x-ui, чтобы использовать прокси. При условии, что вы находитесь в регионе RU.
 
 ```
 touch .env
-echo "https_proxy=http://login:pass@ip_server_proxy:port" > .env
+echo "https_proxy=http://login:pass@ip_server_proxy:port
+vagrant_http_proxy=${https_proxy}
+vagrant_no_proxy="127.0.0.1" > .env
 ```
 
 ```
