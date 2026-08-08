@@ -15,9 +15,9 @@ k8s-rancher
 
 ```
 touch .env
-echo "https_proxy=http://login:pass@ip_server_proxy:port
-vagrant_http_proxy=${https_proxy}
-vagrant_no_proxy="127.0.0.1" > .env
+echo "\"https_proxy=http://login:pass@ip_server_proxy:port\"
+vagrant_http_proxy=\${https_proxy}
+vagrant_no_proxy=\"127.0.0.1\"" > .env
 ```
 
 ```
